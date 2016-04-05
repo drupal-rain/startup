@@ -1,0 +1,46 @@
+<?php
+
+
+/**
+ *
+ * @file
+ * Taxonomy Manager
+ *
+ * Administration interface for managing taxonomy vocabularies
+ *
+ */
+
+// Default value for the tree pager. Value can be overridden with the variable
+// taxonomy_manager_pager_tree_page_size.
+define('TAXONOMY_MANAGER_PAGER_TREE_PAGE_SIZE_DEFAULT', 500);
+
+
+/**
+ * Implements hook_admin_menu_map().
+ */
+function taxonomy_manager_admin_menu_map() {
+  if (!user_access('administer taxonomy')) {
+    return;
+  }
+  $map['admin/structure/taxonomy_manager/voc/%taxonomy_vocabulary_machine_name'] = array(
+    'parent' => 'admin/structure/taxonomy_manager/voc',
+    'arguments' => array(
+      array('%taxonomy_vocabulary_machine_name' => array_keys(taxonomy_vocabulary_get_names())),
+    ),
+  );
+  return $map;
+}
+
+/**
+ * Implements hook_help().
+ */
+function taxonomy_manager_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#taxonomy_manager':
+      $output = t('The Taxonomy Manager provides an additional interface for managing vocabularies of the taxonomy module. It\'s especially very useful for long sets of terms.
+                   The vocabulary is represented in a dynamic tree view.
+                   It supports operation like mass adding and deleting of terms, fast weight editing, moving of terms in hierarchies, merging of terms and fast term data editing.
+                   For more information on how to use please read the readme file included in the taxonomy_manager directory.');
+      return $output;
+  }
+}

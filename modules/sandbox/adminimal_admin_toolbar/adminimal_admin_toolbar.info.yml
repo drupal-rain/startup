@@ -1,0 +1,7 @@
+name: Adminimal Admin Toolbar
+core: 8.x
+description: Adminimal styling brought to admin toolbar.
+package: Administration
+type: module
+dependencies:
+  - admin_toolbar
